@@ -130,4 +130,22 @@ void affich_clt(CLIENT *clt, int i)
 //modifier voiture
 //modifier client
 //louer voiture
+void louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations, int *nb_clt, int nb_voit, int *nb_res)
+{
+    VOITURE *voit;
+    RESERVATION *res;
+    CLIENT *clt;
+    char cin[12];
+    if ((*nb_res != 0))
+    {
+        reservations = (RESERVATION *)realloc(reservations, ((*nb_res) + 1) * sizeof(RESERVATION));
+    }
+    reservations->client = clients;
+    reservations->voiture = voitures;
+    printf("Reservation avec SUCCESS!!! \n");
+    affich_clt(reservations->client, 0);
+    affich_voit(reservations->voiture, 0);
+    /*printf("donner le cin du client : ");
+    fgets(cin, 12, stdin);*/
+}
 //annuler une reservation

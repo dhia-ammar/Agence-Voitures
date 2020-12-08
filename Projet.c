@@ -20,8 +20,9 @@ void main()
     } while (cntr_cin(cin) == false);*/
 
     VOITURE *voitures, *voit;
-    int nb_voitures = 0, nb_clt = 0;
+    int nb_voitures = 0, nb_clt = 0, nb_res = 0;
     CLIENT *clients, *clt;
+    RESERVATION *reservations;
 
     printf("Bienvenue dans votre agence de location de voitures.\nClickez n'importe quelle touche pour commencer.");
     getchar();
@@ -54,14 +55,17 @@ void main()
         clt = clients + i;
         printf("client %i nu cin : %s \n", i, clt->cin);
     }
-    printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
+    reservations = (RESERVATION *)malloc(sizeof(RESERVATION));
+
+    louer(clients, voitures, reservations, &nb_clt, nb_voitures, &nb_res);
+    /*printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
     for (int i = 0; i < nb_voitures; i++)
     {
         voit = voitures + i;
         printf("voiture %i, modele %s marque %s , numero %s , couleur %s , ppj %f.2 assurence %f.2", i, voit->model, voit->marque, voit->numero, voit->couleur, voit->ppj, voit->assurance);
     }
 
-    /*ajout_clt(clients, &nb_clt);
+    ajout_clt(clients, &nb_clt);
     printf("il y'a %i clients : ", nb_clt);
     for (int i = 0; i < nb_clt; i++)
     {
