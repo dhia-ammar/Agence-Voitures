@@ -7,6 +7,11 @@
 
 void ajout_vt(VOITURE *, int *);
 void ajout_clt(CLIENT *, int *);
-void affich_voit(VOITURE *, int);
-void affich_clt(CLIENT *, int);
+void affich_voit(VOITURE *);
+void affich_clt(CLIENT *);
 void louer(CLIENT *, VOITURE *, RESERVATION *, int *, int, int *);
+void affiche_date(DATE *);
+int recherche_voit(VOITURE *, int, char[15]);
+int recherche_clt(CLIENT *, int, char[12]);
+DATE ajout_date(DATE, int);
+void aj_vt(VOITURE *, int *);

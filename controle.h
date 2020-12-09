@@ -135,6 +135,3 @@ bool voiture_existe(VOITURE *tab_vt, int nb_vt, char *num)
     }
     return false;
 }
-//client unique: recherche selon cin si le client existe deja
-//recherch voiture :recherche si une voiture existe dans le tableau
-//recherche client :recharche si un client existe deja en utlisant le CIN

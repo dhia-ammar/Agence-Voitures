@@ -37,27 +37,52 @@ void main()
 
     */
 
-    ajout_vt(voitures, &nb_voitures);
+    /*ajout_vt(voitures, &nb_voitures);
 
     printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
     for (int i = 0; i < nb_voitures; i++)
     {
         voit = voitures + i;
-        affich_voit(voit, i);
+        affich_voit(voit);
     }
-    clients = (CLIENT *)malloc(sizeof(CLIENT));
+    //clients = (CLIENT *)malloc(sizeof(CLIENT));
+    ajout_vt(voitures, &nb_voitures);
+    printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+    }
+    printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+    }*/
 
-    ajout_clt(clients, &nb_clt);
+    /*ajout_clt(clients, &nb_clt);
 
     printf("il y'a %i clients : ", nb_clt);
     for (int i = 0; i < nb_clt; i++)
     {
         clt = clients + i;
-        printf("client %i nu cin : %s \n", i, clt->cin);
+        affich_clt(clt);
     }
+    ajout_clt(clients, &nb_clt);
     reservations = (RESERVATION *)malloc(sizeof(RESERVATION));
-
-    louer(clients, voitures, reservations, &nb_clt, nb_voitures, &nb_res);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+    }
+    printf("AFFICHAGE FINALE \n");
+    for (int i = 0; i < nb_clt; i++)
+    {
+        clt = clients + i;
+        affich_clt(clt);
+    }*/
+    //louer(clients, voitures, reservations, &nb_clt, nb_voitures, &nb_res);
+    //louer(clients, voitures, reservations, &nb_clt, nb_voitures, &nb_res);
     /*printf("il y'a %i voitures \nListe des voitures:\n", nb_voitures);
     for (int i = 0; i < nb_voitures; i++)
     {
