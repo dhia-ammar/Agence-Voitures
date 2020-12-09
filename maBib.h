@@ -289,6 +289,8 @@ DATE ajout_date(DATE debut, int duree)
             an++;
         }
     }
-    printf("%i/%i/%i", jour, mois, an);
-    return debut;
+    fin.annee = an;
+    fin.jour = jour;
+    fin.mois = mois;
+    return fin;
 }
