@@ -28,7 +28,7 @@ void main()
     getchar();
     system("cls");
     //voitures = (VOITURE *)malloc(sizeof(VOITURE));
-    clients = (CLIENT *)malloc(sizeof(CLIENT));
+    //clients = (CLIENT *)malloc(sizeof(CLIENT));
 
     /* 
     
@@ -36,30 +36,53 @@ void main()
 
 
     */
-   aj_client(clients, &nb_clt);
-   printf("il y'a %i clients:\n",nb_clt);
-   for (int i = 0; i < nb_clt; i++)
-   {
-       clt=clients+i;
-       affich_clt(clt);
-       printf("---------------\n");
-   }
-   aj_client(clients,&nb_clt);
-   printf("il y'a %i clients:\n",nb_clt);
-   for (int i = 0; i < nb_clt; i++)
-   {
-       clt=clients+i;
-       affich_clt(clt);
-        printf("---------------\n");
 
-   }
-   aj_client(clients,&nb_clt);
-   printf("il y'a %i clients:\n",nb_clt);
-   for (int i = 0; i < nb_clt; i++)
-   {
-       clt=clients+i;
-       affich_clt(clt);
+    clients = aj_client2(clients, &nb_clt);
+    printf("il y'a %i clients:\n", nb_clt);
+    for (int i = 0; i < nb_clt; i++)
+    {
+        clt = clients + i;
+        affich_clt(clt);
         printf("---------------\n");
-   }
-   
+    }
+    voitures = aj_voit2(voitures, &nb_voitures);
+    printf("il y'a %i voitures:\n", nb_voitures);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+        printf("---------------\n");
+    }
+
+    clients = aj_client2(clients, &nb_clt);
+    printf("il y'a %i clients:\n", nb_clt);
+    for (int i = 0; i < nb_clt; i++)
+    {
+        clt = clients + i;
+        affich_clt(clt);
+        printf("---------------\n");
+    }
+    voitures = aj_voit2(voitures, &nb_voitures);
+    printf("il y'a %i voitures:\n", nb_voitures);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+        printf("---------------\n");
+    }
+    printf("************************\n");
+    printf("il y'a %i clients:\n", nb_clt);
+    for (int i = 0; i < nb_clt; i++)
+    {
+        clt = clients + i;
+        affich_clt(clt);
+        printf("---------------\n");
+    }
+    printf("il y'a %i voitures:\n", nb_voitures);
+    for (int i = 0; i < nb_voitures; i++)
+    {
+        voit = voitures + i;
+        affich_voit(voit);
+        printf("---------------\n");
+    }
 }

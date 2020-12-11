@@ -62,7 +62,6 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
     VOITURE *voit;
     char num[15];
 
-
     printf("Combien de voitures voulez vous ajouter ? \n");
     scanf("%i", &m);
     while (m < 1)
@@ -72,7 +71,7 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
     }
     if ((n != 0) || (m != 1))
     {
-        voitures = (VOITURE *)realloc(voitures, (n + m)*sizeof(VOITURE));
+        voitures = (VOITURE *)realloc(voitures, (n + m) * sizeof(VOITURE));
     }
     getchar();
 
@@ -103,14 +102,74 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
     }
     *nb_voit = n;
 }
+VOITURE *aj_voit2(VOITURE *voitures, int *nb_voit)
+{
+    int n = *nb_voit, m;
+    VOITURE *voit, *vts, *v;
+    char num[15];
 
+    printf("Combien de voitures voulez vous ajouter ? \n");
+    scanf("%i", &m);
+    while (m < 1)
+    {
+        printf("Le nombre entree est invalide. il faut entrer un nombre superieur ou egale a 1. Reesayez.\n");
+        scanf("%i", &m);
+    }
+    getchar();
+    m += n;
+    vts = (VOITURE *)malloc(m * sizeof(VOITURE));
+
+    for (int i = 0; i < m; i++)
+    {
+        voit = (vts + i);
+        if (i < n)
+        {
+            v = voitures + i;
+            strcpy(voit->marque, v->marque);
+            strcpy(voit->model, v->model);
+            strcpy(voit->numero, v->numero);
+            strcpy(voit->couleur, v->couleur);
+            voit->loue = v->loue;
+            voit->ppj = v->ppj;
+            voit->assurance = v->assurance;
+        }
+
+        else
+        {
+            printf("entrez la marque de la voiture : ");
+            fgets(voit->marque, 30, stdin);
+            printf("entrez le modele de la voiture : ");
+            fgets(voit->model, 30, stdin);
+            printf("entrez le numero de la voiture : "); //doit etre unique
+            fgets(num, 15, stdin);
+            while (voiture_existe(voitures, n, num) == true)
+            {
+                printf("Ce numero de voiture existe deja. Il faut utiliser un numero unique \n Reesayez : ");
+                fgets(num, 15, stdin);
+            }
+            strcpy(voit->numero, num);
+            printf("entrez le couleur de la voiture : ");
+            fgets(voit->couleur, 15, stdin);
+            voit->loue = false;
+            printf("entrez le prix de location par jour de la voiture : ");
+            scanf("%f", &voit->ppj);
+            printf("entrez le prix fixe d'assurance de la voiture : ");
+            scanf("%f", &voit->assurance);
+            getchar();
+        }
+    }
+
+    *nb_voit = m;
+    return vts;
+}
 //ajouter un client
-void aj_client(CLIENT *clients,int *nb_clt){
-    int n,m;
+void aj_client(CLIENT *clients, int *nb_clt)
+{
+    int n, m;
     CLIENT *clt;
     char cin[12];
     bool valide;
-    n=*nb_clt;
+    n = *nb_clt;
     printf("Combien de clients voulez vous ajouter ? \n");
     scanf("%i", &m);
     while (m < 1)
@@ -120,12 +179,12 @@ void aj_client(CLIENT *clients,int *nb_clt){
     }
     if ((n != 0) || (m != 1))
     {
-        clients=(CLIENT*)realloc(clients,(n+m)*sizeof(CLIENT));
+        clients = (CLIENT *)realloc(clients, (n + m) * sizeof(CLIENT));
     }
     getchar();
     for (int i = 0; i < m; i++)
     {
-        clt=clients+n;
+        clt = clients + n;
         do
         {
             printf("entrez le cin du client : ");
@@ -141,9 +200,53 @@ void aj_client(CLIENT *clients,int *nb_clt){
         fflush(stdin);
         n++;
     }
-    *nb_clt=n;
-    
+    *nb_clt = n;
+}
+CLIENT *aj_client2(CLIENT *clients, int *nb_clt)
+{
+    int n, m;
+    CLIENT *clt, *clts, *c;
+    char cin[12];
+    bool valide;
 
+    n = *nb_clt;
+    printf("Combien de clients voulez vous ajouter ? \n");
+    scanf("%i", &m);
+    while (m < 1)
+    {
+        printf("Le nombre entree est invalide. il faut entrer un nombre superieur ou egale a 1. Reesayez.\n");
+        scanf("%i", &m);
+    }
+    m += n;
+    clts = (CLIENT *)malloc(m * sizeof(CLIENT));
+    getchar();
+
+    for (int i = 0; i < m; i++)
+    {
+        clt = clts + i;
+        if (i < n)
+        {
+            c = clients + i;
+            strcpy(clt->cin, c->cin);
+            strcpy(clt->nom, c->nom);
+            strcpy(clt->prenom, c->prenom);
+        }
+        else
+        {
+            do
+            {
+                printf("entrez le cin du client : ");
+                fgets(clt->cin, 12, stdin);
+                valide = cntr_cin(clt->cin);
+            } while (valide == false);
+            printf("entrez le nom du client : ");
+            fgets(&clt->nom, 30, stdin);
+            printf("entrez le prenom du client : ");
+            fgets(&clt->prenom, 30, stdin);
+        }
+    }
+    *nb_clt = m;
+    return clts;
 }
 void ajout_clt(CLIENT *tab_clt, int *nb_clt)
 {
