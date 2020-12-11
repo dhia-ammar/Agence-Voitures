@@ -35,10 +35,10 @@ struct reservation
 {
     int duree; //duree de la location
     DATE *ddl; //date de debut de location
-    //DATE dfl;        //date de debut de location calculé automatiquement ddl +duree
+    //DATE *dfl;        //date de fin de location calculé automatiquement ddl +duree
     VOITURE *voiture; //voiture loue par le client
     CLIENT *client;   //client
-    float facture;    // prix total de la location total=nbjours *ppj
+    float facture;    // prix total de la location total=nbjours *ppj+assurence
     bool paye;        //le client a paye la facture ou non
 };
 

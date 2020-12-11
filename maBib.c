@@ -15,3 +15,4 @@ int recherche_voit(VOITURE *, int, char[15]);
 int recherche_clt(CLIENT *, int, char[12]);
 DATE ajout_date(DATE, int);
 void aj_vt(VOITURE *, int *);
+void aj_clt(VOITURE*,int *);

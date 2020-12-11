@@ -61,6 +61,8 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
     int n = *nb_voit, m;
     VOITURE *voit;
     char num[15];
+
+
     printf("Combien de voitures voulez vous ajouter ? \n");
     scanf("%i", &m);
     while (m < 1)
@@ -68,9 +70,9 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
         printf("Le nombre entree est invalide. il faut entrer un nombre superieur ou egale a 1. Reesayez.\n");
         scanf("%i", &m);
     }
-    if ((*nb_voit != 1) && (m != 1))
+    if ((n != 0) || (m != 1))
     {
-        voitures = (VOITURE *)realloc(voitures, n + 1);
+        voitures = (VOITURE *)realloc(voitures, (n + m)*sizeof(VOITURE));
     }
     getchar();
 
@@ -85,7 +87,7 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
         fgets(num, 15, stdin);
         while (voiture_existe(voitures, n, num) == true)
         {
-            printf("Ce numero de voiture existe deja. Il faut utiliser un numero unique/ Reesayez : ");
+            printf("Ce numero de voiture existe deja. Il faut utiliser un numero unique \n Reesayez : ");
             fgets(num, 15, stdin);
         }
         strcpy(voit->numero, num);
@@ -103,6 +105,46 @@ void aj_vt(VOITURE *voitures, int *nb_voit)
 }
 
 //ajouter un client
+void aj_client(CLIENT *clients,int *nb_clt){
+    int n,m;
+    CLIENT *clt;
+    char cin[12];
+    bool valide;
+    n=*nb_clt;
+    printf("Combien de clients voulez vous ajouter ? \n");
+    scanf("%i", &m);
+    while (m < 1)
+    {
+        printf("Le nombre entree est invalide. il faut entrer un nombre superieur ou egale a 1. Reesayez.\n");
+        scanf("%i", &m);
+    }
+    if ((n != 0) || (m != 1))
+    {
+        clients=(CLIENT*)realloc(clients,(n+m)*sizeof(CLIENT));
+    }
+    getchar();
+    for (int i = 0; i < m; i++)
+    {
+        clt=clients+n;
+        do
+        {
+            printf("entrez le cin du client : ");
+            fgets(clt->cin, 12, stdin);
+            fflush(stdin);
+            valide = cntr_cin(clt->cin);
+        } while (valide == false);
+        printf("entrez le nom du client : ");
+        fgets(&clt->nom, 30, stdin);
+        fflush(stdin);
+        printf("entrez le prenom du client : ");
+        fgets(&clt->prenom, 30, stdin);
+        fflush(stdin);
+        n++;
+    }
+    *nb_clt=n;
+    
+
+}
 void ajout_clt(CLIENT *tab_clt, int *nb_clt)
 {
     /*int i;
@@ -165,12 +207,13 @@ void ajout_clt(CLIENT *tab_clt, int *nb_clt)
 // afficher voiture
 void affich_voit(VOITURE *voit)
 {
-    printf("numero: %s marque: %s modele: %s \n couleur %s , ppj %.1f assurence %.1f \n", voit->numero, voit->marque, voit->model, voit->couleur, voit->ppj, voit->assurance);
+    printf("numero: %s marque: %s modele: %s \n couleur: %s  ppj: %.1f assurence: %.1f \n", voit->numero, voit->marque, voit->model, voit->couleur, voit->ppj, voit->assurance);
 }
 //afficher client
 void affich_clt(CLIENT *clt)
 {
     printf("nom: %s prenom: %s cin : %s \n", clt->nom, clt->prenom, clt->cin);
+    fflush(stdout);
 }
 //afficher date
 void affiche_date(DATE *date)
@@ -210,6 +253,7 @@ int recherche_voit(VOITURE *voitures, int nb_voit, char num[15])
 //supprimer client
 //modifier voiture
 //modifier client
+
 //louer voiture
 void louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations, int *nb_clt, int nb_voit, int *nb_res)
 {
@@ -232,7 +276,7 @@ void louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations, int *n
     }
     else
     {
-        reservations->client = clients + (recherche_clt(clients, (*nb_clt), cin[12]) == -1);
+        reservations->client = clients + (recherche_clt(clients, (*nb_clt), cin[12]));
     }
     printf("donner le numero de la voiture a louer : ");
     fgets(num, 15, stdin);
@@ -263,7 +307,7 @@ void louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations, int *n
 //ajouter deux dates
 DATE ajout_date(DATE debut, int duree)
 {
-    int max, jour, mois, an;
+    int jour, mois, an;
     DATE fin;
     int jours[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     jour = debut.jour;
