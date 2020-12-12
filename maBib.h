@@ -139,7 +139,7 @@ VOITURE *aj_voit2(VOITURE *voitures, int *nb_voit)
             fgets(voit->model, 30, stdin);
             printf("entrez le numero de la voiture : "); //doit etre unique
             fgets(num, 15, stdin);
-            while (voiture_existe(vts, n + i, num) == true)
+            while (voiture_existe(vts, i, num) == true)
             {
                 printf("Ce numero de voiture existe deja. Il faut utiliser un numero unique \n Reesayez : ");
                 fgets(num, 15, stdin);
@@ -251,12 +251,12 @@ CLIENT *aj_client2(CLIENT *clients, int *nb_clt)
                     fgets(clt->cin, 12, stdin);
                     valide = cntr_cin(clt->cin);
                 } while (valide == false);
-                if (recherche_clt(clts, n + i, clt->cin) != -1)
+                if (recherche_clt(clts, i, clt->cin) != -1)
                 {
                     printf("Ce CIN existe deja. Reesayez.\n");
                 }
 
-            } while (recherche_clt(clts, n + i, clt->cin) != -1);
+            } while (recherche_clt(clts, i, clt->cin) != -1);
 
             printf("entrez le nom du client : ");
             fgets(&clt->nom, 30, stdin);
@@ -401,7 +401,7 @@ bool voit_dispo(RESERVATION *reservations, int nb_res, VOITURE *voit, DATE *ddl,
         res = reservations + i;
         if (res->voiture == voit)
         {
-            if ((comp_date(dfl, res->ddl) != -1) && (comp_date(ddl, res->dfl) != 1))
+            if (((comp_date(ddl, res->ddl) == 1) && (comp_date(ddl, res->dfl) == -1)) || ((comp_date(dfl, res->ddl) == 1) && (comp_date(dfl, res->dfl) == -1)) || (comp_date(dfl, res->dfl) == 0) || (comp_date(ddl, res->ddl)) == 0)
             {
                 return false;
             }
@@ -519,8 +519,7 @@ CLIENT *supprimer_client(CLIENT *clients, int *nb_client)
     fgets(cin, 12, stdin);
     if ((recherche_clt(clients, n, cin) == -1))
     {
-        printf("le client n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
-        getchar();
+        printf("le client n'existe pas.\n");
         return clients;
     }
     else
@@ -528,7 +527,7 @@ CLIENT *supprimer_client(CLIENT *clients, int *nb_client)
         j = recherche_clt(clients, n, cin);
         clt = clients + j;
         affich_clt(clt);
-        printf("Etes vous sur que vous voulez supprimer ce cienlt?\nTapez oui pour confirmer. ");
+        printf("Etes vous sur que vous voulez supprimer ce client?\nTapez oui pour confirmer. ");
         fgets(conf, 10, stdin);
         if (strcmp(conf, "oui"))
         {
@@ -545,11 +544,12 @@ CLIENT *supprimer_client(CLIENT *clients, int *nb_client)
                     i++;
                 }
             }
+            printf("Supression avec succes!!!\n");
         }
         else
         {
-            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
-            getchar();
+            printf("Vous n'avez pas confirmez la suppression.\n");
+
             return clients;
         }
     }
@@ -569,8 +569,8 @@ VOITURE *supprimer_voiture(VOITURE *voitures, int *nb_voiture)
     fgets(num, 15, stdin);
     if ((recherche_voit(voitures, n, num) == -1))
     {
-        printf("la voiture n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
-        getchar();
+        printf("la voiture n'existe pas.\n");
+
         return voitures;
     }
     else
@@ -599,11 +599,11 @@ VOITURE *supprimer_voiture(VOITURE *voitures, int *nb_voiture)
                     i++;
                 }
             }
+            printf("Supression avec succes!!!\n");
         }
         else
         {
-            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
-            getchar();
+            printf("Vous n'avez pas confirmez la suppression.\n");
             return voitures;
         }
     }
@@ -629,8 +629,7 @@ RESERVATION *supprimer_reservation(RESERVATION *reservations, int *nb_res)
     getchar();
     if (j > n)
     {
-        printf("Cette Reservation n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
-        getchar();
+        printf("Cette Reservation n'existe pas.\n");
         return reservations;
     }
     else
@@ -659,11 +658,11 @@ RESERVATION *supprimer_reservation(RESERVATION *reservations, int *nb_res)
                     i++;
                 }
             }
+            printf("Annulation avec succes!!!\n");
         }
         else
         {
-            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
-            getchar();
+            printf("Vous n'avez pas confirmez la suppression.\n");
             return reservations;
         }
     }
@@ -726,7 +725,7 @@ void payer(RESERVATION *reservations, int nb_res, float *caisse)
     getchar();
     if (j > nb_res)
     {
-        printf("Cette Reservation n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        printf("Cette Reservation n'existe pas.\n");
         getchar();
     }
     else
@@ -736,14 +735,11 @@ void payer(RESERVATION *reservations, int nb_res, float *caisse)
         {
             *caisse += r->facture;
             r->paye = true;
-            printf("Reservation Paye avec success. \n");
-            printf("Tapez n'importe quelle touche pour retourner au menu. \n");
-            getchar();
+            printf("Reservation Paye avec success!!! Merci. \n");
         }
         else
         {
-            printf("Cette Reservation est deja payee.\nTapez n'importe quelle touche pour retourner au menu.");
-            getchar();
+            printf("Cette Reservation est deja payee.\n");
         }
     }
 }
