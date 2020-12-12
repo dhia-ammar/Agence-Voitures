@@ -139,7 +139,7 @@ VOITURE *aj_voit2(VOITURE *voitures, int *nb_voit)
             fgets(voit->model, 30, stdin);
             printf("entrez le numero de la voiture : "); //doit etre unique
             fgets(num, 15, stdin);
-            while (voiture_existe(voitures, n, num) == true)
+            while (voiture_existe(vts, n + i, num) == true)
             {
                 printf("Ce numero de voiture existe deja. Il faut utiliser un numero unique \n Reesayez : ");
                 fgets(num, 15, stdin);
@@ -198,6 +198,20 @@ VOITURE *aj_voit2(VOITURE *voitures, int *nb_voit)
     }
     *nb_clt = n;
 }*/
+//recherche client :recharche si un client existe deja en utlisant le CIN
+int recherche_clt(CLIENT *clients, int nb_clt, char cin[12])
+{
+    CLIENT *clt;
+    for (int i = 0; i < nb_clt; i++)
+    {
+        clt = clients + i;
+        if (strcmp(cin, clt->cin) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
 CLIENT *aj_client2(CLIENT *clients, int *nb_clt)
 {
     int n, m;
@@ -231,10 +245,19 @@ CLIENT *aj_client2(CLIENT *clients, int *nb_clt)
         {
             do
             {
-                printf("entrez le cin du client : ");
-                fgets(clt->cin, 12, stdin);
-                valide = cntr_cin(clt->cin);
-            } while (valide == false);
+                do
+                {
+                    printf("entrez le cin du client : ");
+                    fgets(clt->cin, 12, stdin);
+                    valide = cntr_cin(clt->cin);
+                } while (valide == false);
+                if (recherche_clt(clts, n + i, clt->cin) != -1)
+                {
+                    printf("Ce CIN existe deja. Reesayez.\n");
+                }
+
+            } while (recherche_clt(clts, n + i, clt->cin) != -1);
+
             printf("entrez le nom du client : ");
             fgets(&clt->nom, 30, stdin);
             printf("entrez le prenom du client : ");
@@ -318,20 +341,6 @@ void affich_clt(CLIENT *clt)
 void affiche_date(DATE *date)
 {
     printf("%i/%i/%i \n", date->jour, date->mois, date->annee);
-}
-//recherche client :recharche si un client existe deja en utlisant le CIN
-int recherche_clt(CLIENT *clients, int nb_clt, char cin[12])
-{
-    CLIENT *clt;
-    for (int i = 0; i < nb_clt; i++)
-    {
-        clt = clients + i;
-        if (strcmp(cin, clt->cin) == 0)
-        {
-            return i;
-        }
-    }
-    return -1;
 }
 
 //recherche voit :recharche si une voit existe deja en utlisant le num
