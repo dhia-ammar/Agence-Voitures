@@ -22,3 +22,5 @@ void affich_res(RESERVATION *);
 CLIENT *supprimer_client(CLIENT *, int *);
 VOITURE *supprimer_voiture(VOITURE *, int *);
 RESERVATION *supprimer_reservation(RESERVATION *, int *);
+int comp_date(DATE *, DATE *);
+bool voit_dispo(RESERVATION *, int, VOITURE *, DATE *, DATE *)

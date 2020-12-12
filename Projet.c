@@ -46,14 +46,6 @@ void main()
         printf("---------------\n");
     }
 
-    clients = supprimer_client(clients, &nb_clt);
-    printf("il y'a %i clients:\n", nb_clt);
-    for (int i = 0; i < nb_clt; i++)
-    {
-        clt = clients + i;
-        affich_clt(clt);
-        printf("---------------\n");
-    }
     voitures = aj_voit2(voitures, &nb_voitures);
     printf("il y'a %i voitures:\n", nb_voitures);
     for (int i = 0; i < nb_voitures; i++)
@@ -62,24 +54,10 @@ void main()
         affich_voit(voit);
         printf("---------------\n");
     }
-    voitures = supprimer_voiture(voitures, &nb_voitures);
-    printf("il y'a %i voitures:\n", nb_voitures);
-    for (int i = 0; i < nb_voitures; i++)
-    {
-        voit = voitures + i;
-        affich_voit(voit);
-        printf("---------------\n");
-    }
 
-    //reservations = louer(clients, voitures, reservations, nb_clt, nb_voitures, &nb_res);
+    reservations = louer(clients, voitures, reservations, nb_clt, nb_voitures, &nb_res);
     reservations = louer(clients, voitures, reservations, nb_clt, nb_voitures, &nb_res);
     printf("************************\n");
-    for (int i = 0; i < nb_res; i++)
-    {
-        res = reservations + i;
-        affich_res(res);
-    }
-    clients = supprimer_client(clients, &nb_clt);
     for (int i = 0; i < nb_res; i++)
     {
         res = reservations + i;

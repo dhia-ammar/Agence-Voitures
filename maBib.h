@@ -382,6 +382,25 @@ DATE *ajout_date(DATE *debut, int duree)
     fin->mois = mois;
     return fin;
 }
+
+bool voit_dispo(RESERVATION *reservations, int nb_res, VOITURE *voit, DATE *ddl, DATE *dfl)
+{
+
+    RESERVATION *res;
+    for (int i = 0; i < nb_res; i++)
+    {
+        res = reservations + i;
+        if (res->voiture == voit)
+        {
+            if ((comp_date(dfl, res->ddl) != -1) && (comp_date(ddl, res->dfl) != 1))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 //louer voiture
 RESERVATION *louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations, int nb_clt, int nb_voit, int *nb_res)
 {
@@ -419,30 +438,37 @@ RESERVATION *louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations
     }
     i = recherche_clt(clients, nb_clt, cin);
     res->client = clients + i;
-
-    printf("donner le numero de la voiture a louer : ");
-    fgets(&num, 15, stdin);
-    while (recherche_voit(voitures, nb_voit, num) == -1)
+    do
     {
-        printf("Cette voiture n'existe pas. Donner un numero valide: ");
+        printf("donner le numero de la voiture a louer : ");
         fgets(&num, 15, stdin);
-    }
-    i = recherche_voit(voitures, nb_voit, num);
-    res->voiture = voitures + i;
+        while (recherche_voit(voitures, nb_voit, num) == -1)
+        {
+            printf("Cette voiture n'existe pas. Donner un numero valide: ");
+            fgets(&num, 15, stdin);
+        }
+        i = recherche_voit(voitures, nb_voit, num);
+        res->voiture = voitures + i;
 
-    date1 = (DATE *)malloc(sizeof(DATE));
-    printf("Donner la date de debut de location : ");
-    scanf("%i%i%i", &date1->jour, &date1->mois, &date1->annee);
-    while (cntr_date(date1->jour, date1->mois, date1->annee) == false)
-    {
+        date1 = (DATE *)malloc(sizeof(DATE));
+        printf("Donner la date de debut de location : ");
         scanf("%i%i%i", &date1->jour, &date1->mois, &date1->annee);
-    }
-    date2 = (DATE *)malloc(sizeof(DATE));
-    res->ddl = date1;
-    printf("Donner la duree de reservation en jours : ");
-    scanf("%i", &res->duree);
-    getchar();
-    res->dfl = ajout_date(date1, res->duree);
+        while (cntr_date(date1->jour, date1->mois, date1->annee) == false)
+        {
+            scanf("%i%i%i", &date1->jour, &date1->mois, &date1->annee);
+        }
+        date2 = (DATE *)malloc(sizeof(DATE));
+        res->ddl = date1;
+        printf("Donner la duree de reservation en jours : ");
+        scanf("%i", &res->duree);
+        getchar();
+        res->dfl = ajout_date(date1, res->duree);
+        if (voit_dispo(reservations, n, res->voiture, res->ddl, res->dfl) == false)
+        {
+            printf("Cette voiture n'est pas disponible pour cette datte. \nChangez de date ou changez la voiture.\n");
+        }
+
+    } while (voit_dispo(reservations, n, res->voiture, res->ddl, res->dfl) == false);
     printf("Reservation avec SUCCESS!!! \n");
     affich_clt(res->client);
     affich_voit(res->voiture);
