@@ -451,8 +451,7 @@ RESERVATION *louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations
     printf("Date de fin de location : ");
     affiche_date(res->dfl);
     res->facture = (res->voiture->ppj) * res->duree + res->voiture->assurance;
-    printf("Facture : %.2f", res->facture);
-    putchar("\n");
+    printf("Facture : %.2f \n", res->facture);
     *nb_res = n + 1;
     return tab_res;
 }
@@ -469,5 +468,206 @@ void affich_res(RESERVATION *res)
     affiche_date(res->ddl);
     printf("Date de fin de location : ");
     affiche_date(res->dfl);
-    printf("Total = %.2f DT", res->facture);
+    printf("Total = %.2f DT \n", res->facture);
+}
+
+//supprimer client
+CLIENT *supprimer_client(CLIENT *clients, int *nb_client)
+{
+    int n = *nb_client;
+    CLIENT *clts, *clt, *c;
+    char cin[12], conf[10];
+    int j;
+
+    printf("Donner le cin du client a supprimer: ");
+    fgets(cin, 12, stdin);
+    if ((recherche_clt(clients, n, cin) == -1))
+    {
+        printf("le client n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        getchar();
+        return clients;
+    }
+    else
+    {
+        j = recherche_clt(clients, n, cin);
+        clt = clients + j;
+        affich_clt(clt);
+        printf("Etes vous sur que vous voulez supprimer ce cienlt?\nTapez oui pour confirmer. ");
+        fgets(conf, 10, stdin);
+        if (strcmp(conf, "oui"))
+        {
+            clts = (CLIENT *)malloc((n - 1) * sizeof(CLIENT));
+            for (int i = 0, k = 0; i < n - 1; k++)
+            {
+                clt = clts + i;
+                if (k != j)
+                {
+                    c = clients + k;
+                    strcpy(clt->cin, c->cin);
+                    strcpy(clt->nom, c->nom);
+                    strcpy(clt->prenom, c->prenom);
+                    i++;
+                }
+            }
+        }
+        else
+        {
+            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
+            getchar();
+            return clients;
+        }
+    }
+    n--;
+    *nb_client = n;
+    return clts;
+}
+
+//supprimer voiture
+VOITURE *supprimer_voiture(VOITURE *voitures, int *nb_voiture)
+{
+    int n = *nb_voiture, i, j, k;
+    VOITURE *voits, *voit, *v;
+    char num[15], conf[10];
+
+    printf("Donner le numero de la voiture a supprimer: ");
+    fgets(num, 15, stdin);
+    if ((recherche_voit(voitures, n, num) == -1))
+    {
+        printf("la voiture n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        getchar();
+        return voitures;
+    }
+    else
+    {
+
+        j = recherche_voit(voitures, n, num);
+        voit = voitures + j;
+        affich_voit(voit);
+        printf("Etes vous sur que vous voulez supprimer cette voiture?\nTapez oui pour confirmer. ");
+        fgets(conf, 10, stdin);
+        if (strcmp(conf, "oui"))
+        {
+            voits = (VOITURE *)malloc((n - 1) * sizeof(VOITURE));
+            for (int i = 0, k = 0; i < n - 1; k++)
+            {
+                voit = voits + i;
+                if (k != j)
+                {
+                    v = voitures + k;
+                    strcpy(voit->marque, v->marque);
+                    strcpy(voit->model, v->model);
+                    strcpy(voit->numero, v->numero);
+                    strcpy(voit->couleur, v->couleur);
+                    voit->ppj = v->ppj;
+                    voit->assurance = v->assurance;
+                    i++;
+                }
+            }
+        }
+        else
+        {
+            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
+            getchar();
+            return voitures;
+        }
+    }
+    n--;
+    *nb_voiture = n;
+    return voits;
+}
+//supprimer reservation
+RESERVATION *supprimer_reservation(RESERVATION *reservations, int *nb_res)
+{
+    RESERVATION *tab_res, *res, *r;
+    int i, j, k, n = *nb_res;
+    char conf[10];
+    printf("Liste de reservations : \n");
+    for (int l = 0; l < n; l++)
+    {
+        r = reservations + l;
+        printf("%i - ", l + 1);
+        affich_res(r);
+    }
+    printf("Donner le numero de reservation que vous voulez annuler : ");
+    scanf("%i", &j);
+    getchar();
+    if (j > n)
+    {
+        printf("Cette Reservation n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        return reservations;
+    }
+    else
+    {
+        j--;
+        r = reservations + j;
+        affich_res(r);
+        printf("Etes vous sur que vous voulez supprimer cette reservation?\nTapez oui pour confirmer. ");
+        fgets(conf, 10, stdin);
+        if (strcmp(conf, "oui"))
+        {
+            tab_res = (RESERVATION *)malloc((n - 1) * sizeof(RESERVATION));
+            for (i = 0, k = 0; i < n - 1; k++)
+            {
+                res = tab_res + i;
+                if (k != j)
+                {
+                    r = reservations + k;
+                    res->duree = r->duree;
+                    res->ddl = r->ddl;
+                    res->dfl = r->dfl;
+                    res->voiture = r->voiture;
+                    res->client = r->client;
+                    res->facture = r->facture;
+                    res->paye = r->paye;
+                    i++;
+                }
+            }
+        }
+        else
+        {
+            printf("Vous n'avez pas confirmez la suppression.\nTapez n'importe quelle touche pour retourner au menu.");
+            getchar();
+            return reservations;
+        }
+    }
+    n--;
+    *nb_res = n;
+    return tab_res;
+}
+int comp_date(DATE *date1, DATE *date2)
+{
+    if (date1->annee > date2->annee)
+    {
+        return 1;
+    }
+    else if (date1->annee < date2->annee)
+    {
+        return -1;
+    }
+    else
+    {
+        if (date1->mois > date2->mois)
+        {
+            return 1;
+        }
+        else if (date1->mois < date2->mois)
+        {
+            return -1;
+        }
+        else
+        {
+            if (date1->jour > date2->jour)
+            {
+                return 1;
+            }
+            else if (date1->jour < date2->jour)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
 }

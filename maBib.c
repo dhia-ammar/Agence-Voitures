@@ -19,3 +19,6 @@ DATE *ajout_date(DATE *, int);
 CLIENT *aj_client2(CLIENT *, int *);
 VOITURE *aj_voit2(VOITURE *, int *);
 void affich_res(RESERVATION *);
+CLIENT *supprimer_client(CLIENT *, int *);
+VOITURE *supprimer_voiture(VOITURE *, int *);
+RESERVATION *supprimer_reservation(RESERVATION *, int *);
