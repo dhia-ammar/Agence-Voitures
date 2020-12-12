@@ -9,7 +9,6 @@ struct voiture
     char model[30];
     char numero[15];  // identifiant unique
     char couleur[15]; //couleur de la voiture
-    bool loue;        //la voiture est loue ou non
     float ppj;        //prix par jour
     float assurance;  //prix fixe d'assurance pour chaque locataire
 };
@@ -33,9 +32,9 @@ typedef struct client CLIENT;
 
 struct reservation
 {
-    int duree; //duree de la location
-    DATE *ddl; //date de debut de location
-    //DATE *dfl;        //date de fin de location calculé automatiquement ddl +duree
+    int duree;        //duree de la location
+    DATE *ddl;        //date de debut de location
+    DATE *dfl;        //date de fin de location calculé automatiquement ddl +duree
     VOITURE *voiture; //voiture loue par le client
     CLIENT *client;   //client
     float facture;    // prix total de la location total=nbjours *ppj+assurence

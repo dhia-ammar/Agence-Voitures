@@ -22,8 +22,8 @@ void main()
     VOITURE *voitures, *voit;
     int nb_voitures = 0, nb_clt = 0, nb_res = 0;
     CLIENT *clients, *clt;
-    RESERVATION *reservations;
-
+    RESERVATION *reservations, *res;
+    system("cls");
     printf("Bienvenue dans votre agence de location de voitures.\nClickez n'importe quelle touche pour commencer.");
     getchar();
     system("cls");
@@ -54,35 +54,12 @@ void main()
         printf("---------------\n");
     }
 
-    clients = aj_client2(clients, &nb_clt);
-    printf("il y'a %i clients:\n", nb_clt);
-    for (int i = 0; i < nb_clt; i++)
-    {
-        clt = clients + i;
-        affich_clt(clt);
-        printf("---------------\n");
-    }
-    voitures = aj_voit2(voitures, &nb_voitures);
-    printf("il y'a %i voitures:\n", nb_voitures);
-    for (int i = 0; i < nb_voitures; i++)
-    {
-        voit = voitures + i;
-        affich_voit(voit);
-        printf("---------------\n");
-    }
+    reservations = louer(clients, voitures, reservations, nb_clt, nb_voitures, &nb_res);
+    reservations = louer(clients, voitures, reservations, nb_clt, nb_voitures, &nb_res);
     printf("************************\n");
-    printf("il y'a %i clients:\n", nb_clt);
-    for (int i = 0; i < nb_clt; i++)
+    for (int i = 0; i < nb_res; i++)
     {
-        clt = clients + i;
-        affich_clt(clt);
-        printf("---------------\n");
-    }
-    printf("il y'a %i voitures:\n", nb_voitures);
-    for (int i = 0; i < nb_voitures; i++)
-    {
-        voit = voitures + i;
-        affich_voit(voit);
-        printf("---------------\n");
+        res = reservations + i;
+        affich_res(res);
     }
 }
