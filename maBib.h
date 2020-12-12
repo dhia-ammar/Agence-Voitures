@@ -467,6 +467,7 @@ RESERVATION *louer(CLIENT *clients, VOITURE *voitures, RESERVATION *reservations
         {
             printf("Cette voiture n'est pas disponible pour cette datte. \nChangez de date ou changez la voiture.\n");
         }
+        res->paye = false;
 
     } while (voit_dispo(reservations, n, res->voiture, res->ddl, res->dfl) == false);
     printf("Reservation avec SUCCESS!!! \n");
@@ -620,6 +621,7 @@ RESERVATION *supprimer_reservation(RESERVATION *reservations, int *nb_res)
     if (j > n)
     {
         printf("Cette Reservation n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        getchar();
         return reservations;
     }
     else
@@ -694,6 +696,45 @@ int comp_date(DATE *date1, DATE *date2)
             {
                 return 0;
             }
+        }
+    }
+}
+void payer(RESERVATION *reservations, int nb_res, float *caisse)
+{
+    RESERVATION *r;
+    int j;
+
+    printf("Liste de reservations : \n");
+    for (int l = 0; l < nb_res; l++)
+    {
+        r = reservations + l;
+        printf("%i - ", l + 1);
+        affich_res(r);
+    }
+
+    printf("Quelle reservation voulez vous payer? ");
+    scanf("%i", &j);
+    getchar();
+    if (j > nb_res)
+    {
+        printf("Cette Reservation n'existe pas.\nTapez n'importe quelle touche pour retourner au menu.");
+        getchar();
+    }
+    else
+    {
+        r = reservations + j - 1;
+        if (r->paye == false)
+        {
+            *caisse += r->facture;
+            r->paye = true;
+            printf("Reservation Paye avec success. \n");
+            printf("Tapez n'importe quelle touche pour retourner au menu. \n");
+            getchar();
+        }
+        else
+        {
+            printf("Cette Reservation est deja payee.\nTapez n'importe quelle touche pour retourner au menu.");
+            getchar();
         }
     }
 }
