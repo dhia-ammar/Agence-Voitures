@@ -43,7 +43,8 @@ struct reservation
 
 typedef struct reservation RESERVATION;
 
-bool cntr_date(int j, int m, int a) //validation de la date
+//validation de la date
+bool cntr_date(int j, int m, int a)
 {
     switch (m)
     {
@@ -96,8 +97,8 @@ bool cntr_date(int j, int m, int a) //validation de la date
     }
     return true;
 }
-
-bool cntr_cin(char *cin) //validation num cin
+//validation num cin
+bool cntr_cin(char *cin)
 {
     int len, i;
     len = strlen(cin);
