@@ -144,6 +144,7 @@ void main()
                 res = reservations + i;
 
                 affich_res(res);
+                printf("---------------\n");
             }
             printf("****************************\n");
             printf("Tapez n'importe quelle touche pour retourner au menu.");
@@ -190,6 +191,7 @@ void main()
                 res = reservations + i;
 
                 affich_res(res);
+                printf("---------------\n");
             }
             printf("****************************\n");
             printf("Tapez n'importe quelle touche pour retourner au menu.");

@@ -527,6 +527,7 @@ void payer(RESERVATION *reservations, int nb_res, float *caisse)
         r = reservations + l;
         printf("%i - ", l + 1);
         affich_res(r);
+        printf("---------------\n");
     }
 
     printf("Quelle reservation voulez vous payer? ");
